@@ -7,17 +7,22 @@
 import Foundation
 
 public struct LameMajeuresController {
+    public init(password: String? = nil) {
+        self.password = password
+    }
+    
     let baseURL = URL(string: Const.api())!
-
+    var password: String? = nil
+    
     private var token: String {
         var components = URLComponents(url: baseURL.appendingPathComponent("token"), resolvingAgainstBaseURL: false)!
-        components.queryItems = [URLQueryItem(name: "password", value: Const.token())]
+        components.queryItems = [URLQueryItem(name: "password", value: Const.token(optionalPassword: self.password))]
         guard let url = components.url else {
             return ""
         }
 
-        var result: String?
         let semaphore = DispatchSemaphore(value: 0)
+        var tokenResult: String?
 
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -25,21 +30,22 @@ public struct LameMajeuresController {
         let task = URLSession.shared.dataTask(with: request) { data, _, _ in
             defer { semaphore.signal() }
 
-            if let data = data,
-               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-               let token = json["token"] as? String {
-                result = token
+            guard let data = data,
+                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                  let token = json["token"] as? String else {
+                return
             }
+
+            tokenResult = token
         }
+
         task.resume()
         semaphore.wait()
 
-        let tokenValue = result ?? ""
+        let tokenValue = tokenResult ?? ""
         print("token: \(tokenValue)")
         return tokenValue
     }
-
-    public init() {}
 
     public func getLameMajeure(id: Int, completion: @Sendable @escaping (Result<LameMajeure, Error>) -> Void) {
         let url = baseURL.appendingPathComponent("/api/lame_majeures/\(id)")
