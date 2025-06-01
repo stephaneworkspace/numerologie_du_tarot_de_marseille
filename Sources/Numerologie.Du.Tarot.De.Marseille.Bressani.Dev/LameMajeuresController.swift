@@ -10,7 +10,27 @@ public struct LameMajeuresController {
     let baseURL = URL(string: Const.api())!
 
     private var token: String {
-        return Const.token()
+        let url = baseURL.appendingPathComponent("token?password=" + Const.token())
+        var tokenValue = ""
+        let semaphore = DispatchSemaphore(value: 0)
+
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, _ in
+            defer { semaphore.signal() }
+            guard
+                let data = data,
+                let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                let token = json["token"] as? String
+            else {
+                return
+            }
+            tokenValue = token
+        }
+        task.resume()
+        semaphore.wait()
+        return tokenValue
     }
 
     public init() {}

@@ -15,9 +15,9 @@ public struct Const {
               let data = try? Data(contentsOf: url),
               let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil),
               let dict = plist as? [String: Any],
-              let _ = dict["api_token"] as? String else {
+              let _ = dict["api_password"] as? String else {
             return ""
         }
-        return("\(dict["api_token"] as? String ?? "")")
+        return("\(dict["api_password"] as? String ?? "")")
     }
 }
