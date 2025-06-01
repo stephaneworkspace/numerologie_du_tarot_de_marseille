@@ -50,6 +50,11 @@ public struct LameMajeuresController {
     }
 
     public func getLameMajeure(id: Int, completion: @Sendable @escaping (Result<LameMajeure, Error>) -> Void) {
+        guard !token.isEmpty else {
+            completion(.failure(NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "Token vide — mot de passe invalide ?"])))
+            return
+        }
+        
         let url = baseURL.appendingPathComponent("/api/lame_majeures/\(id)")
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -75,6 +80,11 @@ public struct LameMajeuresController {
     }
 
     public func getAllLamesMajeures(completion: @Sendable @escaping (Result<[LameMajeure], Error>) -> Void) {
+        guard !token.isEmpty else {
+            completion(.failure(NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "Token vide — mot de passe invalide ?"])))
+            return
+        }
+        
         let url = baseURL.appendingPathComponent("/api/lame_majeures")
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
