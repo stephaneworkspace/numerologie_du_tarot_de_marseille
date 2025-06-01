@@ -5,23 +5,18 @@
 //  Created by Stéphane Bressani on 01.06.2025.
 //
 import Foundation
-import UIKit
 
 public struct LameMajeuresController {
-    let baseURL = URL(string: Const.api() + "/api/lame_majeures/")!
+    let baseURL = URL(string: Const.api())!
 
     private var token: String {
-        guard let url = Bundle.main.url(forResource: "token", withExtension: "txt"),
-              let contents = try? String(contentsOf: url) else {
-            return ""
-        }
-        return contents.trimmingCharacters(in: .whitespacesAndNewlines)
+        return Const.token()
     }
 
     public init() {}
 
     public func getLameMajeure(id: Int, completion: @Sendable @escaping (Result<LameMajeure, Error>) -> Void) {
-        let url = baseURL.appendingPathComponent("/lame_majeures/\(id)")
+        let url = baseURL.appendingPathComponent("/api/lame_majeures/\(id)")
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -46,7 +41,7 @@ public struct LameMajeuresController {
     }
 
     public func getAllLamesMajeures(completion: @Sendable @escaping (Result<[LameMajeure], Error>) -> Void) {
-        let url = baseURL.appendingPathComponent("/lame_majeures")
+        let url = baseURL.appendingPathComponent("/api/lame_majeures")
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
