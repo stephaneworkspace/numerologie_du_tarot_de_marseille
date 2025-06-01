@@ -10,8 +10,13 @@ public struct LameMajeuresController {
     let baseURL = URL(string: Const.api())!
 
     private var token: String {
-        let url = baseURL.appendingPathComponent("token?password=" + Const.token())
-        var tokenValue = ""
+        var components = URLComponents(url: baseURL.appendingPathComponent("token"), resolvingAgainstBaseURL: false)!
+        components.queryItems = [URLQueryItem(name: "password", value: Const.token())]
+        guard let url = components.url else {
+            return ""
+        }
+
+        var result: String?
         let semaphore = DispatchSemaphore(value: 0)
 
         var request = URLRequest(url: url)
@@ -19,17 +24,18 @@ public struct LameMajeuresController {
 
         let task = URLSession.shared.dataTask(with: request) { data, _, _ in
             defer { semaphore.signal() }
-            guard
-                let data = data,
-                let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                let token = json["token"] as? String
-            else {
-                return
+
+            if let data = data,
+               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let token = json["token"] as? String {
+                result = token
             }
-            tokenValue = token
         }
         task.resume()
         semaphore.wait()
+
+        let tokenValue = result ?? ""
+        print("token: \(tokenValue)")
         return tokenValue
     }
 
