@@ -15,34 +15,36 @@ public struct LameMajeuresController {
     var password: String? = nil
     
     private var token: String {
+        final class Box<T>: @unchecked Sendable {
+            var value: T
+            init(_ value: T) { self.value = value }
+        }
+
+        let tokenBox = Box<String?>(nil)
+        let semaphore = DispatchSemaphore(value: 0)
+
         var components = URLComponents(url: baseURL.appendingPathComponent("token"), resolvingAgainstBaseURL: false)!
         components.queryItems = [URLQueryItem(name: "password", value: Const.token(optionalPassword: self.password))]
+
         guard let url = components.url else {
             return ""
         }
 
-        let semaphore = DispatchSemaphore(value: 0)
-        var tokenResult: String?
-
         var request = URLRequest(url: url)
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
-        let task = URLSession.shared.dataTask(with: request) { data, _, _ in
+        URLSession.shared.dataTask(with: request) { data, _, _ in
             defer { semaphore.signal() }
-
             guard let data = data,
                   let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
                   let token = json["token"] as? String else {
                 return
             }
+            tokenBox.value = token
+        }.resume()
 
-            tokenResult = token
-        }
-
-        task.resume()
         semaphore.wait()
-
-        let tokenValue = tokenResult ?? ""
+        let tokenValue = tokenBox.value ?? ""
         print("token: \(tokenValue)")
         return tokenValue
     }
