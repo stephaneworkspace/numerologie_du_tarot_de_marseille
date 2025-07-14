@@ -4,6 +4,7 @@
 //
 //  Created by Stéphane Bressani on 01.06.2025.
 //
+
 import Foundation
 
 public struct LameMajeuresController {
@@ -15,38 +16,7 @@ public struct LameMajeuresController {
     var password: String? = nil
     
     private var token: String {
-        final class Box<T>: @unchecked Sendable {
-            var value: T
-            init(_ value: T) { self.value = value }
-        }
-
-        let tokenBox = Box<String?>(nil)
-        let semaphore = DispatchSemaphore(value: 0)
-
-        var components = URLComponents(url: baseURL.appendingPathComponent("token"), resolvingAgainstBaseURL: false)!
-        components.queryItems = [URLQueryItem(name: "password", value: Const.token(optionalPassword: self.password))]
-
-        guard let url = components.url else {
-            return ""
-        }
-
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-
-        URLSession.shared.dataTask(with: request) { data, _, _ in
-            defer { semaphore.signal() }
-            guard let data = data,
-                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                  let token = json["token"] as? String else {
-                return
-            }
-            tokenBox.value = token
-        }.resume()
-
-        semaphore.wait()
-        let tokenValue = tokenBox.value ?? ""
-        print("token: \(tokenValue)")
-        return tokenValue
+        AuthTokenProvider.token(for: baseURL, password: password)
     }
 
     public func getLameMajeure(id: Int, completion: @Sendable @escaping (Result<LameMajeure, Error>) -> Void) {

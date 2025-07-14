@@ -41,3 +41,16 @@ controller.getLameMajeure(id: 1) { result in
 }
 
 semaphore.wait()
+
+let t_controller = ThemeController()
+
+t_controller.downloadXlsx(prenoms: "Jean-Pierre", noms: "Dupont", date: "1981-01-01") { result in
+    switch result {
+    case .success(let fileURL):
+        print("Fichier téléchargé à : \(fileURL)")
+    case .failure(let error):
+        print("Erreur : \(error)")
+    }
+}
+
+semaphore.wait()
