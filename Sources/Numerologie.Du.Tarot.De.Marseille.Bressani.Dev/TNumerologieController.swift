@@ -53,7 +53,7 @@ public struct TNumerologieController: Sendable {
             let resume_rapide: String
             let text: String
             let numerologie_type: Int
-            let jours: Int
+            let jour: Int
             let mois: Int
             let annee: Int
         }
@@ -62,7 +62,7 @@ public struct TNumerologieController: Sendable {
             resume_rapide: resumeRapide,
             text: text,
             numerologie_type: numerologieType,
-            jours: jour,
+            jour: jour,
             mois: mois,
             annee: annee
         )
