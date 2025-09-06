@@ -17,7 +17,7 @@ public enum AuthTokenProvider {
         let tokenBox = Box<String?>(nil)
         let semaphore = DispatchSemaphore(value: 0)
 
-        var components = URLComponents(url: baseURL.appendingPathComponent("token"), resolvingAgainstBaseURL: false)!
+        var components = URLComponents(url: baseURL.appendingPathComponent("token_ipad"), resolvingAgainstBaseURL: false)!
                components.queryItems = [URLQueryItem(name: "password", value: Const.token(optionalPassword: password))]
 
 
