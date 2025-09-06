@@ -49,6 +49,10 @@ public struct TNumerologieController: Sendable {
     
     @available(macOS 12.0, iOS 15.0, *)
     public func postNumerologie(resumeRapide: String, text: String, numerologieType: Int, jour: Int, mois: Int, annee: Int) async throws -> Numerologie {
+        struct PostWrapper: Encodable {
+            let numerologie: PostData
+        }
+
         struct PostData: Encodable {
             let resume_rapide: String
             let text: String
@@ -67,9 +71,8 @@ public struct TNumerologieController: Sendable {
             annee: annee
         )
 
-        let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .useDefaultKeys
-        let body = try encoder.encode(postData)
+        let wrapper = PostWrapper(numerologie: postData)
+        let body = try JSONEncoder().encode(wrapper)
         
         if let jsonStr = String(data: body, encoding: .utf8) {
             print("JSON envoyé :", jsonStr)
