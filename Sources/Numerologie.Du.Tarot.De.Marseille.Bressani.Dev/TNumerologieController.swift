@@ -1,83 +1,41 @@
-//
-//  TNumerologieController.swift
-//  Numerologie.Du.Tarot.De.Marseille.Bressani.Dev
-//
-//  Created by Stéphane Bressani on 06.09.2025.
-//
-
 import Foundation
 
-public struct TNumerologieController {
+public struct TNumerologieController: Sendable {
     public init(token: String) {
         self.token = token
     }
-    
+
     let baseURL = URL(string: Const.apiT())!
     var token: String
 
-    public func getShow(numerologie_type: Int, completion: @Sendable @escaping (Result<[Numerologie], Error>) -> Void) {
+    @available(macOS 12.0, iOS 15.0, *)
+    private func fetch<T: Decodable>(_ path: String) async throws -> T {
         guard !token.isEmpty else {
-            completion(.failure(NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "Token vide"])))
-            return
+            throw NSError(domain: "Auth", code: 401,
+                          userInfo: [NSLocalizedDescriptionKey: "Token vide"])
         }
         
-        let url = baseURL.appendingPathComponent("/api/numerologie/type/\(numerologie_type)")
+        let url = baseURL.appendingPathComponent(path)
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-
-            guard let data = data else {
-                completion(.failure(NSError(domain: "NoData", code: 0)))
-                return
-            }
-
-            do {
-                let result = try JSONDecoder().decode([Numerologie].self, from: data)
-                completion(.success(result))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-        task.resume()
-    }
-    
-    public func getIndex(id: Int, completion: @Sendable @escaping (Result<Numerologie, Error>) -> Void) {
-        guard !token.isEmpty else {
-            completion(.failure(NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "Token vide"])))
-            return
-        }
         
-        let url = baseURL.appendingPathComponent("/api/numerologie/\(id)")
-        var request = URLRequest(url: url)
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-
-            guard let data = data else {
-                completion(.failure(NSError(domain: "NoData", code: 0)))
-                return
-            }
-
-            do {
-                let result = try JSONDecoder().decode(Numerologie.self, from: data)
-                completion(.success(result))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-        task.resume()
+        let (data, _) = try await URLSession.shared.data(for: request)
+        return try JSONDecoder().decode(T.self, from: data)
     }
-    
+
+    @available(macOS 12.0, iOS 15.0, *)
+    public func getShow(numerologie_type: Int) async throws -> [Numerologie] {
+        try await fetch("/api/numerologie/type/\(numerologie_type)")
+    }
+
+    @available(macOS 12.0, iOS 15.0, *)
+    public func getIndex(id: Int) async throws -> Numerologie {
+        try await fetch("/api/numerologie/\(id)")
+    }
 }
 
-public struct Numerologie: Decodable {
+// MARK: - Modèle
+public struct Numerologie: Decodable, Sendable {
     public let id: Int
     public let numerologie_type: Int
     public let resume_rapide: String
@@ -86,9 +44,4 @@ public struct Numerologie: Decodable {
     public let jour: Int
     public let mois: Int
     public let annee: Int
-    /*
-    public var image: String {
-        let num = String(format: "%02d", nombre)
-        return "1980C\(num).jpg"
-    }*/
 }

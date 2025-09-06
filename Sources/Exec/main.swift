@@ -6,38 +6,40 @@ import Foundation
 import SwiftUI
 import Numerologie_Du_Tarot_De_Marseille_Bressani_Dev
 
-// print(Message.hello())
+let controller = MultiAuthController()
+guard let token = controller.getToken().1 else {
+    print("Token manquant")
+    exit(1)
+}
 
-//
-let controller = MultiAuthController();
-print(controller.getToken())
+let tNumerologieController = TNumerologieController(token: token)
 
-
-let tNumerologiecontroller = TNumerologieController(token: controller.getToken().1!)
-let semaphore = DispatchSemaphore(value: 0)
-tNumerologiecontroller.getShow(numerologie_type: 1) { result in
-    switch result {
-    case .success(let themes):
+// Utiliser Task pour lancer le contexte async
+let mainTask = Task {
+    // getShow
+    do {
+        let themes = try await tNumerologieController.getShow(numerologie_type: 1)
         for theme in themes {
             print("\(theme.id): \(theme.annee)")
         }
-    case .failure(let error):
-        print("Erreur: \(error)")
+    } catch {
+        print("Erreur getShow: \(error)")
     }
-    semaphore.signal()
-}
-semaphore.wait()
 
-tNumerologiecontroller.getIndex(id: 1) { result in
-    switch result {
-    case .success(let theme):
+    // getIndex
+    do {
+        let theme = try await tNumerologieController.getIndex(id: 1)
         print("\(theme.id): \(theme.jour).\(theme.mois).\(theme.annee)")
-    case .failure(let error):
-        print("Erreur: \(error)")
+    } catch {
+        print("Erreur getIndex: \(error)")
     }
-    semaphore.signal()
+
+    // Quitter le programme si nécessaire
+    exit(0)
 }
-semaphore.wait()
+
+// Maintenir le RunLoop principal pour permettre à Task de s'exécuter
+RunLoop.main.run()
 
 /*
 

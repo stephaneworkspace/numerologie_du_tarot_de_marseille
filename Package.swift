@@ -6,6 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Numerologie.Du.Tarot.De.Marseille.Bressani.Dev",
     platforms: [
+        .macOS(.v12), // minimum macOS 12
         .iOS(.v18),
     ],
     products: [
