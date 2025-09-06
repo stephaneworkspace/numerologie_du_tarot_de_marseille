@@ -67,12 +67,13 @@ public struct TNumerologieController: Sendable {
             annee: annee
         )
 
-        // Pour forcer le JSON à garder le snake_case
         let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .useDefaultKeys // laisse tel quel
+        encoder.keyEncodingStrategy = .useDefaultKeys
         let body = try encoder.encode(postData)
         
-        print(body)
+        if let jsonStr = String(data: body, encoding: .utf8) {
+            print("JSON envoyé :", jsonStr)
+        }
         
         // Envoie la requête POST
         return try await request("/api/numerologie", method: "POST", body: body)
