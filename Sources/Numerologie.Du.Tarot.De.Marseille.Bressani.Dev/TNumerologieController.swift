@@ -72,7 +72,7 @@ public struct TNumerologieController: Sendable {
         encoder.keyEncodingStrategy = .useDefaultKeys // laisse tel quel
         let body = try encoder.encode(postData)
         
-        print("Debug: " + body)
+        print(body)
         
         // Envoie la requête POST
         return try await request("/api/numerologie", method: "POST", body: body)
