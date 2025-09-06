@@ -16,16 +16,16 @@ public struct MultiAuthController {
         self.token_n = AuthTokenProvider.token(for: URL(string: Const.api())!, password: password)
         self.token_t = AuthTokenProvider.token(for: URL(string: Const.apiT() + "/public")!, password: password)
         if self.token_n != nil {
-            print("✅ Token ok pour: " + Const.api())
+            print("✅ Token ok pour: " + Const.api() + " " + self.token_n)
         }
-        if self.token_n != nil {
-            print("✅ Token ok pour: " + Const.apiT())
+        if self.token_t != nil {
+            print("✅ Token ok pour: " + Const.apiT() + " " + self.token_t)
         }
     }
     
     var password: String? = nil
-    var token_t: String? = nil
     var token_n: String? = nil
+    var token_t: String? = nil
     
     public func getToken() -> (String?, String?) {
         return (token_n, token_t)
