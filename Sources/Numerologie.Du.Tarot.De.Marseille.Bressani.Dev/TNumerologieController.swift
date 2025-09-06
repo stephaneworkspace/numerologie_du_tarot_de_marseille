@@ -40,7 +40,7 @@ public struct Numerologie: Decodable, Sendable, Hashable {
     public let numerologie_type: Int
     public let resume_rapide: String
     public let text: String
-    public let png_b64: String?
+    public let png_b64: String
     public let jour: Int
     public let mois: Int
     public let annee: Int
