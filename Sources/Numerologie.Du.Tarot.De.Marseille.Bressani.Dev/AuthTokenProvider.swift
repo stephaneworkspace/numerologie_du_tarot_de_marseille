@@ -18,13 +18,16 @@ public enum AuthTokenProvider {
         let semaphore = DispatchSemaphore(value: 0)
 
         var components = URLComponents(url: baseURL.appendingPathComponent("token"), resolvingAgainstBaseURL: false)!
-        components.queryItems = [URLQueryItem(name: "password", value: Const.token(optionalPassword: password))]
+               components.queryItems = [URLQueryItem(name: "password", value: Const.token(optionalPassword: password))]
+
 
         guard let url = components.url else {
             return ""
         }
 
         var request = URLRequest(url: url)
+
+        request.httpMethod = "POST"  //
         request.setValue("application/json", forHTTPHeaderField: "Accept")
 
         URLSession.shared.dataTask(with: request) { data, _, _ in
@@ -38,8 +41,9 @@ public enum AuthTokenProvider {
         }.resume()
 
         semaphore.wait()
+ 
         let tokenValue = tokenBox.value ?? ""
-        print("token: \(tokenValue)")
+        // print("token: \(tokenValue)")
         return tokenValue
     }
 }

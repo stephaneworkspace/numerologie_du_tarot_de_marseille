@@ -6,9 +6,13 @@ import Foundation
 import SwiftUI
 import Numerologie_Du_Tarot_De_Marseille_Bressani_Dev
 
-print(Message.hello())
+// print(Message.hello())
 
 //
+let controller = MultiAuthController();
+print(controller.getToken())
+/*
+
 
 let controller = LameMajeuresController()
 
@@ -42,6 +46,7 @@ controller.getLameMajeure(id: 1) { result in
 
 semaphore.wait()
 
+
 let t_controller = ThemeController()
 
 t_controller.downloadXlsx(prenoms: "Jean-Pierre", noms: "Dupont", date: "1981-01-01") { result in
@@ -53,4 +58,4 @@ t_controller.downloadXlsx(prenoms: "Jean-Pierre", noms: "Dupont", date: "1981-01
     }
 }
 
-semaphore.wait()
+semaphore.wait()*/
