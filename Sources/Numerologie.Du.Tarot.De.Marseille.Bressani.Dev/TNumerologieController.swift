@@ -25,7 +25,7 @@ public struct TNumerologieController: Sendable {
 
     @available(macOS 12.0, iOS 15.0, *)
     public func getShow(numerologie_type: Int) async throws -> [Numerologie] {
-        try await fetch("/api/numerologie/type/\(numerologie_type)")
+        try await fetch("/api/numerologie_light/type/\(numerologie_type)")
     }
 
     @available(macOS 12.0, iOS 15.0, *)
@@ -40,7 +40,7 @@ public struct Numerologie: Decodable, Sendable, Hashable {
     public let numerologie_type: Int
     public let resume_rapide: String
     public let text: String
-    public let png_b64: String
+    public let png_b64: String?
     public let jour: Int
     public let mois: Int
     public let annee: Int
