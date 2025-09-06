@@ -41,6 +41,30 @@ public struct TNumerologieController: Sendable {
     public func getIndex(id: Int) async throws -> Numerologie {
         try await request("/api/numerologie/\(id)", method: "GET")
     }
+    
+    @available(macOS 12.0, iOS 15.0, *)
+    public func postNumerologie(resumeRapide: String, numerologieType: Int, jour: Int, mois: Int, annee: Int) async throws -> Numerologie {
+        struct PostData: Encodable {
+            let resume_rapide: String
+            let numerologie_type: Int
+            let jour: Int
+            let mois: Int
+            let annee: Int
+        }
+
+        let postData = PostData(
+            resume_rapide: resumeRapide,
+            numerologie_type: numerologieType,
+            jour: jour,
+            mois: mois,
+            annee: annee
+        )
+
+        let body = try JSONEncoder().encode(postData)
+        
+        // Envoie la requête POST
+        return try await request("/api/numerologie", method: "POST", body: body)
+    }
 
     @available(macOS 12.0, iOS 15.0, *)
     public func deleteNumerologie(id: Int) async throws {
