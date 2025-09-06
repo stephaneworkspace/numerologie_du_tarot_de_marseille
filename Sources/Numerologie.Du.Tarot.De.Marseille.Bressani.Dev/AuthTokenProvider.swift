@@ -43,7 +43,7 @@ public enum AuthTokenProvider {
         semaphore.wait()
  
         let tokenValue = tokenBox.value ?? ""
-        // print("token: \(tokenValue)")
+        //print("token: \(tokenValue)")
         return tokenValue
     }
 }
