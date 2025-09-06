@@ -61,7 +61,7 @@ public struct TNumerologieController: Sendable {
 
         let postData = PostData(
             resume_rapide: resumeRapide,
-            text: " ",
+            text: text,
             numerologie_type: numerologieType,
             jour: jour,
             mois: mois,
@@ -70,9 +70,9 @@ public struct TNumerologieController: Sendable {
 
         let body = try JSONEncoder().encode(postData)
         
-        if let jsonStr = String(data: body, encoding: .utf8) {
+        /*if let jsonStr = String(data: body, encoding: .utf8) {
             print("JSON envoyé :", jsonStr)
-        }
+        }*/
         
         // Envoie la requête POST
         return try await request("/api/numerologie", method: "POST", body: body)
