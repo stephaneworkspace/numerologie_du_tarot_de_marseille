@@ -43,10 +43,10 @@ public struct TNumerologieController: Sendable {
     }
     
     @available(macOS 12.0, iOS 15.0, *)
-    public func postNumerologie(resumeRapide: String, text: String?, numerologieType: Int, jour: Int, mois: Int, annee: Int) async throws -> Numerologie {
+    public func postNumerologie(resumeRapide: String, text: String, numerologieType: Int, jour: Int, mois: Int, annee: Int) async throws -> Numerologie {
         struct PostData: Encodable {
             let resume_rapide: String
-            let text: String?
+            let text: String
             let numerologie_type: Int
             let jours: Int
             let mois: Int
