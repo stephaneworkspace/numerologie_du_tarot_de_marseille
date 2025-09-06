@@ -11,6 +11,22 @@ import Numerologie_Du_Tarot_De_Marseille_Bressani_Dev
 //
 let controller = MultiAuthController();
 print(controller.getToken())
+
+
+let tNumerologiecontroller = TNumerologieController(token: controller.getToken().1!)
+let semaphore = DispatchSemaphore(value: 0)
+tNumerologiecontroller.getShow(numerologie_type: 1) { result in
+    switch result {
+    case .success(let themes):
+        for theme in themes {
+            print("\(theme.id): \(theme.annee)")
+        }
+    case .failure(let error):
+        print("Erreur: \(error)")
+    }
+    semaphore.signal()
+}
+semaphore.wait()
 /*
 
 
