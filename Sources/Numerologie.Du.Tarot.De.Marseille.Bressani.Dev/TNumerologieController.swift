@@ -24,7 +24,8 @@ public struct TNumerologieController: Sendable {
         }
 
         let (data, _) = try await URLSession.shared.data(for: request)
-
+        print(String(data: data, encoding: .utf8)!)
+        
         if T.self == EmptyResponse.self && data.isEmpty {
             return EmptyResponse() as! T
         }
