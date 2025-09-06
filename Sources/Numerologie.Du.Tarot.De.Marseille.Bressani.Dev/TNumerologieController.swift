@@ -44,6 +44,37 @@ public struct TNumerologieController {
         }
         task.resume()
     }
+    
+    public func getIndex(id: Int, completion: @Sendable @escaping (Result<Numerologie, Error>) -> Void) {
+        guard !token.isEmpty else {
+            completion(.failure(NSError(domain: "Auth", code: 401, userInfo: [NSLocalizedDescriptionKey: "Token vide"])))
+            return
+        }
+        
+        let url = baseURL.appendingPathComponent("/api/numerologie/\(id)")
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(NSError(domain: "NoData", code: 0)))
+                return
+            }
+
+            do {
+                let result = try JSONDecoder().decode(Numerologie.self, from: data)
+                completion(.success(result))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
 }
 
 public struct Numerologie: Decodable {

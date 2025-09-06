@@ -27,6 +27,18 @@ tNumerologiecontroller.getShow(numerologie_type: 1) { result in
     semaphore.signal()
 }
 semaphore.wait()
+
+tNumerologiecontroller.getIndex(id: 1) { result in
+    switch result {
+    case .success(let theme):
+        print("\(theme.id): \(theme.jour).\(theme.mois).\(theme.annee)")
+    case .failure(let error):
+        print("Erreur: \(error)")
+    }
+    semaphore.signal()
+}
+semaphore.wait()
+
 /*
 
 
