@@ -60,14 +60,19 @@ public struct TNumerologieController: Sendable {
 
         let postData = PostData(
             resume_rapide: resumeRapide,
-            text: text,
+            text: " ",
             numerologie_type: numerologieType,
             jour: jour,
             mois: mois,
             annee: annee
         )
 
-        let body = try JSONEncoder().encode(postData)
+        // Pour forcer le JSON à garder le snake_case
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .useDefaultKeys // laisse tel quel
+        let body = try encoder.encode(postData)
+        
+        print("Debug: " + body)
         
         // Envoie la requête POST
         return try await request("/api/numerologie", method: "POST", body: body)
