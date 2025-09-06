@@ -35,7 +35,7 @@ public struct TNumerologieController: Sendable {
 }
 
 // MARK: - Modèle
-public struct Numerologie: Decodable, Sendable {
+public struct Numerologie: Decodable, Sendable, Hashable {
     public let id: Int
     public let numerologie_type: Int
     public let resume_rapide: String
