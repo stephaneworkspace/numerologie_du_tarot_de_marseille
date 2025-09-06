@@ -19,7 +19,7 @@ public struct MultiAuthController {
             print("✅ Token ok pour: " + Const.api() + " " + self.token_n!)
         }
         if self.token_t != nil {
-            print("✅ Token ok pour: " + Const.apiT() + " " + self.token_t!
+            print("✅ Token ok pour: " + Const.apiT() + " " + self.token_t!)
         }
     }
     
