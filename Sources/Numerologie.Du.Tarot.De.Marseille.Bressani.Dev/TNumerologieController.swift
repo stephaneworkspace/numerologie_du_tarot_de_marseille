@@ -94,9 +94,28 @@ public struct Numerologie: Decodable, Sendable, Hashable {
     public let resume_rapide: String
     public let text: String
     public let png_b64: String
+    public let png_simple_b64: String
     public let jour: Int
     public let mois: Int
     public let annee: Int
+    public let interpretation_cae: Int
+    public let interpretation_01_cae_i: String
+    public let interpretation_cai: Int
+    public let interpretation_01_cai_i: String
+    public let interpretation_coe: Int
+    public let interpretation_01_coe_i: String
+    public let interpretation_coi: Int
+    public let interpretation_01_coi_i: String
+    public let interpretation_int: Int
+    public let interpretation_01_int_i: String
+    public let interpretation_nem: Int
+    public let interpretation_01_nem_i: String
+    public let interpretation_pex: Int
+    public let interpretation_01_pex_i: String
+    public let interpretation_ppr: Int
+    public let interpretation_01_ppr_i: String
+    public let interpretation_rha: Int
+    public let interpretation_01_rha_i: String
 }
 public struct NumerologieLight: Decodable, Sendable, Hashable {
     public let id: Int
