@@ -116,6 +116,33 @@ public struct Numerologie: Decodable, Sendable, Hashable {
     public let interpretation_01_ppr_i: String
     public let interpretation_rha: Int
     public let interpretation_01_rha_i: String
+    public var a_01_cae_i: [Int] {
+        interpretation_01_cae_i.split(separator: ";").compactMap { Int($0) }
+    }
+    public var a_01_cai_i: [Int] {
+        interpretation_01_cai_i.split(separator: ";").compactMap { Int($0) }
+    }
+    public var a_01_coe_i: [Int] {
+        interpretation_01_coe_i.split(separator: ";").compactMap { Int($0) }
+    }
+    public var a_01_coi_i: [Int] {
+        interpretation_01_coi_i.split(separator: ";").compactMap { Int($0) }
+    }
+    public var a_01_int_i: [Int] {
+        interpretation_01_int_i.split(separator: ";").compactMap { Int($0) }
+    }
+    public var a_01_nem_i: [Int] {
+        interpretation_01_nem_i.split(separator: ";").compactMap { Int($0) }
+    }
+    public var a_01_pex_i: [Int] {
+        interpretation_01_pex_i.split(separator: ";").compactMap { Int($0) }
+    }
+    public var a_01_ppr_i: [Int] {
+        interpretation_01_ppr_i.split(separator: ";").compactMap { Int($0) }
+    }
+    public var a_01_rha_i: [Int] {
+        interpretation_01_rha_i.split(separator: ";").compactMap { Int($0) }
+    }
 }
 public struct NumerologieLight: Decodable, Sendable, Hashable {
     public let id: Int
