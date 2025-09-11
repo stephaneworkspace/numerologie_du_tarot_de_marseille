@@ -27,13 +27,15 @@ let package = Package(
 
                 // Rust lib pour macOS uniquement
                 .linkedLibrary("theme_numerologie_docx", .when(platforms: [.macOS])),
-                .unsafeFlags(["-LSources/Numerologie.Du.Tarot.De.Marseille.Bressani.Dev/theme_numerologie_docx_rust/macos"], .when(platforms: [.macOS])),
+                .unsafeFlags([
+                    "-LSources/Numerologie.Du.Tarot.De.Marseille.Bressani.Dev/theme_numerologie_docx_rust/macos"
+                ], .when(platforms: [.macOS])),
 
                 // Rust lib pour iOS uniquement (device + simulator)
                 .linkedLibrary("theme_numerologie_docx", .when(platforms: [.iOS])),
                 .unsafeFlags([
-                    "-LSources/Numerologie.Du.Tarot.De.Marseille.Bressani.Dev/theme_numerologie_docx_rust/ios-arm64",
-                    "-LSources/Numerologie.Du.Tarot.De.Marseille.Bressani.Dev/theme_numerologie_docx_rust/ios-arm64-simulator"
+                    "-LSources/Numerologie.Du.Tarot.De.Marseille.Bressani.Dev/theme_numerologie_docx_rust/iosarm64",
+                    "-LSources/Numerologie.Du.Tarot.De.Marseille.Bressani.Dev/theme_numerologie_docx_rust/iosarm64simulator"
                 ], .when(platforms: [.iOS]))
             ]
         ),
