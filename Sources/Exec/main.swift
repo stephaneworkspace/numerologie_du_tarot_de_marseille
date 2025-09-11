@@ -6,6 +6,29 @@ import Foundation
 import SwiftUI
 import Numerologie_Du_Tarot_De_Marseille_Bressani_Dev
 
+@_silgen_name("theme")
+func theme(_ password: UnsafePointer<CChar>,
+           _ path_cartes: UnsafePointer<CChar>,
+           _ nom: UnsafePointer<CChar>,
+           _ date: UnsafePointer<CChar>,
+           _ id: CInt) -> UnsafePointer<CChar>?
+
+
+let passwordC = "password".cString(using: .utf8)!
+let nomC = "Stéphane".cString(using: .utf8)!
+  let dateC = "03.04.1986".cString(using: .utf8)!
+  let pathCartesC = "./".cString(using: .utf8)!
+
+// Appel à Rust
+if let ptr = theme(passwordC, pathCartesC, nomC, dateC, 43) {
+    let str = String(cString: ptr)
+    print(str)
+} else {
+    print("Erreur rust")
+}
+
+
+
 let controller = MultiAuthController()
 guard let token = controller.getToken().1 else {
     print("Token manquant")
@@ -40,6 +63,9 @@ let mainTask = Task {
 
 // Maintenir le RunLoop principal pour permettre à Task de s'exécuter
 RunLoop.main.run()
+
+
+
 
 /*
 
