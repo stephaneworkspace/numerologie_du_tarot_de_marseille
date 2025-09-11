@@ -39,7 +39,7 @@ let package = Package(
         ),
         .executableTarget(
             name: "Exec",
-            dependencies: ["Numerologie.Du.Tarot.De.Marseille.Bressani.Dev"]
+            dependencies: ["Numerologie.Du.Tarot.De.Marseille.Bressani.Dev"],
         )
     ]
 )

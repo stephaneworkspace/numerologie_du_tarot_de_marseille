@@ -6,6 +6,7 @@ import Foundation
 import SwiftUI
 import Numerologie_Du_Tarot_De_Marseille_Bressani_Dev
 
+
 @_silgen_name("theme")
 func theme(_ password: UnsafePointer<CChar>,
            _ path_cartes: UnsafePointer<CChar>,
@@ -13,20 +14,26 @@ func theme(_ password: UnsafePointer<CChar>,
            _ date: UnsafePointer<CChar>,
            _ id: CInt) -> UnsafePointer<CChar>?
 
-
-let passwordC = "password".cString(using: .utf8)!
 let nomC = "Stéphane".cString(using: .utf8)!
-  let dateC = "03.04.1986".cString(using: .utf8)!
-  let pathCartesC = "./".cString(using: .utf8)!
-
-// Appel à Rust
-if let ptr = theme(passwordC, pathCartesC, nomC, dateC, 43) {
-    let str = String(cString: ptr)
-    print(str)
+let dateC = "03.04.1986".cString(using: .utf8)!
+let pathCartesC = "./".cString(using: .utf8)!
+let url = URL(fileURLWithPath: "./Sources/Numerologie.Du.Tarot.De.Marseille.Bressani.Dev/Resources/Secrets.plist")
+let data = try? Data(contentsOf: url)
+let plist = try? PropertyListSerialization.propertyList(from: data!, options: [], format: nil)
+if let dict = plist as? [String: Any],
+   let password = dict["api_password"] as? String,
+   let passwordC = password.cString(using: .utf8) {
+    // passwordC est maintenant un [CChar]
+    if let ptr = theme(passwordC, pathCartesC, nomC, dateC, 43) {
+        let str = String(cString: ptr)
+        print(str)
+    } else {
+        print("Erreur rust")
+    }
 } else {
-    print("Erreur rust")
+    print("Mot de passe manquant ou invalide")
+    exit(1)
 }
-
 
 
 let controller = MultiAuthController()
