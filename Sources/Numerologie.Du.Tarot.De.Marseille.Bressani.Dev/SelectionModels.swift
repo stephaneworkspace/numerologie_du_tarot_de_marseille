@@ -41,4 +41,5 @@ public enum TypeTraitement: Int, Codable {
     case int = 6
     case nem = 7
     case pex = 8
+    case rha = 9
 }
