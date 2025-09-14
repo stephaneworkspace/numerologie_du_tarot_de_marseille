@@ -107,59 +107,6 @@ public struct Selection: Codable {
     public let aspects: [SelectionAspect]
     public let traitement: SelectionTraitment
     public let vocabulaire_divers: [SelectionVocabulaireDivers]
-    // helper pour afficher les définitions (lignes def_robert_l1..l5) pour un nom d'aspect
-    @ViewBuilder
-    public func defsVStack(for name: String) -> some View {
-        // on récupère l'aspect correspondant une seule fois
-        if let aspect = self.aspects.first(where: { $0.nom == name }) {
-            if !aspect.def_robert_l1.isEmpty {
-                Text("1. \(aspect.def_robert_l1)")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-            if !aspect.def_robert_l2.isEmpty {
-                Text("2. \(aspect.def_robert_l2)")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-            if !aspect.def_robert_l3.isEmpty {
-                Text("3. \(aspect.def_robert_l3)")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-            if !aspect.def_robert_l4.isEmpty {
-                Text("4. \(aspect.def_robert_l4)")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-            if !aspect.def_robert_l5.isEmpty {
-                Text("5. \(aspect.def_robert_l5)")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
-        }
-    }
-
-    // helper pour générer la liste d'aspects pour une polarité ("+" ou "-")
-    @ViewBuilder
-    public func aspectsList(polarity: String) -> some View {
-        let filtered = self.aspects.filter { aspect in
-            self.traitement.aspects_cles.contains(aspect.nom) && aspect.polarite == polarity
-        }
-        ForEach(filtered, id: \.nom) { x in
-            HStack(alignment: .top) {
-                Text(x.nom)
-                    .font(.system(.body, design: .default).smallCaps())
-                    .fontWeight(x.sw_bold ? .bold : .regular)   // applique le bold conditionnel
-                    .foregroundStyle(polarity == "+" ? .blue : .red) // couleur selon polarité
-                    .frame(width: 200, alignment: .leading)
-
-                VStack(alignment: .leading) {
-                    defsVStack(for: x.nom)
-                }
-            }
-        }
-    }
 }
 
 public enum TypeTraitement: Int, Codable {
