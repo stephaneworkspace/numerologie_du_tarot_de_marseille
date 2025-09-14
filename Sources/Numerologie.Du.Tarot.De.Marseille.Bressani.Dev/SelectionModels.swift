@@ -31,3 +31,14 @@ public struct Selection: Codable {
     let note_de_cours: [SelectionNoteDeCours]
     let traitement: SelectionTraitment
 }
+
+public enum TypeTraitement: Int, Codable {
+    case ppr = 1
+    case cae = 2
+    case coe = 3
+    case cai = 4
+    case coi = 5
+    case int = 6
+    case nem = 7
+    case pex = 8
+}

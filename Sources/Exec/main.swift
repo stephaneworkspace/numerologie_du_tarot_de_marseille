@@ -23,7 +23,7 @@ if let dict = plist as? [String: Any],
         print("Erreur rust")
     }*/
     if let ptr = rSelectionTraitement(password: passwordC,
-                                      type_traitement: 1,
+                                      type_traitement: TypeTraitement.ppr,
                                       id: 43) {
         let jsonString = String(cString: ptr)
 

@@ -28,9 +28,9 @@ public func rTheme(password: UnsafePointer<CChar>,
 }
 
 public func rSelectionTraitement(password: UnsafePointer<CChar>,
-                                 type_traitement: CInt,
-                                 id: CInt) -> UnsafePointer<CChar>? {
-    return selection_traitment(password, type_traitement, id)
+                                 type_traitement: TypeTraitement,
+                                 id: Int) -> UnsafePointer<CChar>? {
+    return selection_traitment(password, CInt(type_traitement.rawValue), CInt(id))
 }
 
 public func rFreeCString(_ ptr: UnsafeMutablePointer<CChar>) {
