@@ -28,8 +28,8 @@ public struct SelectionTraitment: Codable {
 }
 
 public struct Selection: Codable {
-    let note_de_cours: [SelectionNoteDeCours]
-    let traitement: SelectionTraitment
+    public let note_de_cours: [SelectionNoteDeCours]
+    public let traitement: SelectionTraitment
 }
 
 public enum TypeTraitement: Int, Codable {
