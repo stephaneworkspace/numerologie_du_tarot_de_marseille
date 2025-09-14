@@ -80,8 +80,20 @@ public struct SelectionTraitment: Codable {
     }
 }
 
+public struct SelectionAspect: Codable {
+    public let nom: String
+    public let sw_bold: Bool
+    public let polarite: String
+    public let def_robert_l1: String
+    public let def_robert_l2: String
+    public let def_robert_l3: String
+    public let def_robert_l4: String
+    public let def_robert_l5: String
+}
+
 public struct Selection: Codable {
     public let note_de_cours: [SelectionNoteDeCours]
+    public let aspects: [SelectionAspect]
     public let traitement: SelectionTraitment
 }
 
