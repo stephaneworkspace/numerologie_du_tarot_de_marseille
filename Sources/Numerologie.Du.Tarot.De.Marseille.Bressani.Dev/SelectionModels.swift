@@ -52,6 +52,7 @@ public struct SelectionTraitment: Codable {
     public let html: String
     public let html_b: String?
     public let html_r: String?
+    public let aspects_cles: [String]
     
     public func makeAttributedTextWithExposants(fontSize: CGFloat = 12) -> (AttributedString, AttributedString, AttributedString) {
         
