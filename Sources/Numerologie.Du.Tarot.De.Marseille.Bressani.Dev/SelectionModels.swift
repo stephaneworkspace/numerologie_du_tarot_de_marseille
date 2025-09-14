@@ -8,23 +8,23 @@
 import Foundation
 
 public struct SelectionMotCle: Codable {
-    let mot_cle: String
-    let mot_cle_indice: String?
-    let polarite: String?
+    public let mot_cle: String
+    public let mot_cle_indice: String?
+    public let polarite: String?
 }
 
 public struct SelectionNoteDeCours: Codable {
-    let mots_cles: [SelectionMotCle]
-    let aspects_cles: [String]
-    let html: String
-    let html_r: String?
-    let html_r2: String?
+    public let mots_cles: [SelectionMotCle]
+    public let aspects_cles: [String]
+    public let html: String
+    public let html_r: String?
+    public let html_r2: String?
 }
 
 public struct SelectionTraitment: Codable {
-    let html: String
-    let html_b: String?
-    let html_r: String?
+    public let html: String
+    public let html_b: String?
+    public let html_r: String?
 }
 
 public struct Selection: Codable {
