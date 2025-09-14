@@ -5,6 +5,7 @@
 import Foundation
 import SwiftUI
 import Numerologie_Du_Tarot_De_Marseille_Bressani_Dev
+import Numerologie_Du_Tarot_De_Marseille_Bressani_Dev
 
 
 @_silgen_name("theme")
@@ -13,6 +14,13 @@ func theme(_ password: UnsafePointer<CChar>,
            _ nom: UnsafePointer<CChar>,
            _ date: UnsafePointer<CChar>,
            _ id: CInt) -> UnsafePointer<CChar>?
+
+@_silgen_name("selection_traitment")
+func selection_traitment(_ password: UnsafePointer<CChar>,
+                         _ type_traitement: CInt,
+                         _ id: CInt) -> UnsafePointer<CChar>?
+@_silgen_name("free_cstring")
+func free_cstring(_ ptr: UnsafeMutablePointer<CChar>)
 
 let nomC = "Stéphane".cString(using: .utf8)!
 let dateC = "03.04.1986".cString(using: .utf8)!
@@ -24,11 +32,26 @@ if let dict = plist as? [String: Any],
    let password = dict["api_password"] as? String,
    let passwordC = password.cString(using: .utf8) {
     // passwordC est maintenant un [CChar]
-    if let ptr = theme(passwordC, pathCartesC, nomC, dateC, 43) {
+    /*if let ptr = theme(passwordC, pathCartesC, nomC, dateC, 43) {
         let str = String(cString: ptr)
         print(str)
     } else {
         print("Erreur rust")
+    }*/
+    if let ptr = selection_traitment(passwordC, 1, 43) {
+        let jsonString = String(cString: ptr)
+
+        if let jsonData = jsonString.data(using: .utf8) {
+            do {
+                let selection = try JSONDecoder().decode(Selection.self, from: jsonData)
+                print("✅ Décodé en struct:", selection)
+            } catch {
+                print("❌ Erreur de décodage:", error)
+                print("Chaîne JSON brute:", jsonString)
+            }
+        }
+        // ⚠️ libérer le CString
+        free_cstring(UnsafeMutablePointer(mutating: ptr))
     }
 } else {
     print("Mot de passe manquant ou invalide")
@@ -44,7 +67,7 @@ guard let token = controller.getToken().1 else {
 
 let tNumerologieController = TNumerologieController(token: token)
 
-// Utiliser Task pour lancer le contexte async
+
 let mainTask = Task {
     // getShow
     do {
