@@ -90,8 +90,8 @@ public struct SelectionTraitment: Codable {
         var result = AttributedString(htmlText)
 
         // Patterns for bold and italic
-        let boldPattern = "_BBB_(.*?)_BBB_"
-        let italicPattern = "_III_(.*?)_III_"
+        let boldPattern = "_BBB(.*?)BBB_"
+        let italicPattern = "_III(.*?)III_"
 
         // Helper function to process matches and apply attribute
         func applyStyle(pattern: String, to result: inout AttributedString, fontTrait: (Font) -> Font) {
