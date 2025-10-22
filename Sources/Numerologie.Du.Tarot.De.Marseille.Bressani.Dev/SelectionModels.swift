@@ -52,9 +52,11 @@ public struct SelectionTraitment: Codable {
     public let html: String
     public let html_b: String?
     public let html_r: String?
+    public let html_aux1: String?
+    public let html_aux2: String?
     public let aspects_cles: [String]
     
-    public func makeAttributedTextWithExposants(fontSize: CGFloat = 12) -> (AttributedString, AttributedString, AttributedString) {
+    public func makeAttributedTextWithExposants(fontSize: CGFloat = 12) -> (AttributedString, AttributedString, AttributedString, AttributedString, AttributedString) {
         
         func processHtml(_ htmlText: String?) -> AttributedString {
             guard let htmlText = htmlText else {
@@ -76,8 +78,10 @@ public struct SelectionTraitment: Codable {
         let attrHtml = processHtml(html)
         let attrHtmlB = processHtml(html_b)
         let attrHtmlR = processHtml(html_r)
+        let attrHtmlAux1 = processHtml(html_aux1)
+        let attrHtmlAux2 = processHtml(html_aux2)
         
-        return (attrHtml, attrHtmlB, attrHtmlR)
+        return (attrHtml, attrHtmlB, attrHtmlR, attrHtmlAux1, attrHtmlAux2)
     }
 }
 
