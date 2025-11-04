@@ -20,6 +20,13 @@ func selection_traitment(_ password: UnsafePointer<CChar>,
 @_silgen_name("free_cstring")
 func free_cstring(_ ptr: UnsafeMutablePointer<CChar>)
 
+@_silgen_name("cyclesPng")
+func cyclesPng(_ j: CInt,
+               _ m: CInt,
+               _ a: CInt,
+               _ age: CInt,
+               _ path_cycle: UnsafePointer<CChar>) -> UnsafePointer<CChar>?
+
 public func rTheme(password: UnsafePointer<CChar>,
                    path_cartes: UnsafePointer<CChar>,
                    nom: UnsafePointer<CChar>,
@@ -43,4 +50,8 @@ public func rSelectionTraitementSecondaire(password: UnsafePointer<CChar>,
 
 public func rFreeCString(_ ptr: UnsafeMutablePointer<CChar>) {
     free_cstring(ptr)
+}
+
+public func rCyclesPng(j: Int, m: Int, a: Int, age: Int, path_cycle: UnsafePointer<CChar>) -> UnsafePointer<CChar>? {
+    return cyclesPng(CInt(j), CInt(m), CInt(a), CInt(age), path_cycle)
 }
