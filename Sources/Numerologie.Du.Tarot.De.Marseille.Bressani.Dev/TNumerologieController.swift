@@ -40,12 +40,12 @@ public struct TNumerologieController: Sendable {
 
     @available(macOS 12.0, iOS 15.0, *)
     public func getShow(numerologie_type: Int) async throws -> [NumerologieLight] {
-        try await request("/api/numerologie_light/type/\(numerologie_type)", method: "GET")
+        try await request("numerologie_light/type/\(numerologie_type)", method: "GET")
     }
 
     @available(macOS 12.0, iOS 15.0, *)
     public func getIndex(id: Int) async throws -> Numerologie {
-        try await request("/api/numerologie/\(id)", method: "GET")
+        try await request("numerologie/\(id)", method: "GET")
     }
     
     @available(macOS 12.0, iOS 15.0, *)
@@ -75,12 +75,12 @@ public struct TNumerologieController: Sendable {
         }*/
         
         // Envoie la requête POST
-        return try await request("/api/numerologie", method: "POST", body: body)
+        return try await request("numerologie", method: "POST", body: body)
     }
 
     @available(macOS 12.0, iOS 15.0, *)
     public func deleteNumerologie(id: Int) async throws {
-        _ = try await request("/api/numerologie/\(id)", method: "DELETE") as EmptyResponse
+        _ = try await request("numerologie/\(id)", method: "DELETE") as EmptyResponse
     }
 }
 

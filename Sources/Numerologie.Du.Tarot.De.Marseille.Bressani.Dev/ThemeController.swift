@@ -19,7 +19,7 @@ public struct ThemeController {
         AuthTokenProvider.token(for: baseURL, password: password)
     }
     public func downloadXlsx(prenoms: String, noms: String, date: String, completion: @escaping (Result<URL, Error>) -> Void) {
-        var components = URLComponents(url: baseURL.appendingPathComponent("api/pdf/xlsx"), resolvingAgainstBaseURL: false)!
+        var components = URLComponents(url: baseURL.appendingPathComponent("pdf/xlsx"), resolvingAgainstBaseURL: false)!
         components.queryItems = [
             URLQueryItem(name: "prenoms", value: prenoms),
             URLQueryItem(name: "noms", value: noms),

@@ -121,7 +121,7 @@ semaphore.wait()
 
 let t_controller = ThemeController()
 
-t_controller.downloadXlsx(prenoms: "Jean-Pierre", noms: "Dupont", date: "1981-01-01") { result in
+t_controller.downloadXlsx(prenoms: "Jean-Sebastien", noms: "Dupont", date: "1981-01-01") { result in
     switch result {
     case .success(let fileURL):
         print("Fichier téléchargé à : \(fileURL)")

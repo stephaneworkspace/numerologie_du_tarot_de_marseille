@@ -8,10 +8,10 @@ import Foundation
 
 public struct Const {
     public static func api() -> String {
-        return "https://numerologie.bressani.dev:1122"
+        return "https://numerologie.bressani.dev/api/"
     }
     public static func apiT() -> String {
-        return "https://t.bressani.dev:1178"
+        return "https://divination.bressani.dev/api/"
     }
     public static func token(optionalPassword: String?) -> String {
         if optionalPassword == nil {

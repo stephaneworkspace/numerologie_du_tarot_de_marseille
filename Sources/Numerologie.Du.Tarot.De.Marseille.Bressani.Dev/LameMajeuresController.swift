@@ -28,7 +28,7 @@ public struct LameMajeuresController {
             return
         }*/
         
-        let url = baseURL.appendingPathComponent("/api/lame_majeures/\(id)")
+        let url = baseURL.appendingPathComponent("lame_majeures/\(id)")
         print(url.absoluteString)
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
@@ -59,7 +59,7 @@ public struct LameMajeuresController {
             return
         }
         
-        let url = baseURL.appendingPathComponent("/api/lame_majeures")
+        let url = baseURL.appendingPathComponent("lame_majeures")
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         let task = URLSession.shared.dataTask(with: request) { data, response, error in

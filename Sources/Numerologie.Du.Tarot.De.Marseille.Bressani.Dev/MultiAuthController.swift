@@ -14,7 +14,7 @@ public struct MultiAuthController {
             self.password = Const.token(optionalPassword: password)
         }
         self.token_n = AuthTokenProvider.token(for: URL(string: Const.api())!, password: password)
-        self.token_t = AuthTokenProvider.token(for: URL(string: Const.apiT() + "/public")!, password: password)
+        self.token_t = AuthTokenProvider.token(for: URL(string: Const.apiT())!, password: password)
         if self.token_n != nil {
             print("✅ Token ok pour: " + Const.api() + " " + self.token_n!)
         }
