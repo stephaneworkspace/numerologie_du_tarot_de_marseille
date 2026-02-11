@@ -11,7 +11,7 @@ public struct Const {
         return "https://numerologie.bressani.dev/api/"
     }
     public static func apiT() -> String {
-        return "https://divination.bressani.dev/api/"
+        return "https://esoterisme.bressani.dev/api/"
     }
     public static func token(optionalPassword: String?) -> String {
         if optionalPassword == nil {
