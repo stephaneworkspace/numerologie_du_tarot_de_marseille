@@ -8,7 +8,7 @@ import Foundation
 
 public struct Const {
     public static func api() -> String {
-        return "https://numerologie.bressani.dev/api/"
+        return "https://tarot.bressani.dev/api/"
     }
     public static func apiT() -> String {
         return "https://esoterisme.bressani.dev/api/"
