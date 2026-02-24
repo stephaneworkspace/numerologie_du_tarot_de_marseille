@@ -89,6 +89,8 @@ public struct LameMajeure: Decodable {
     public let nombre: Int
     public let nombre_romain: String
     public let cartouche: String
+    public let note: String
+    public let binaire: String
 
     public var image: String {
         let num = String(format: "%02d", nombre)
